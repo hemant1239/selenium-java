@@ -2,13 +2,10 @@ package framework.pages.UltimateQA;
 
 import framework.utils.WaitUtils;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 
 public class SignInPage {
-    //Test Data
-    public static final String invalidUserName = "test@abc.com";
-    public static final String invalidPassword = "test";
-    public static final String signInErrorMessage = "Invalid email or password.";
     private final WebDriver driver;
     private final WaitUtils wait;
     //Locators
@@ -42,9 +39,9 @@ public class SignInPage {
     public String getSignInErrorMessage() {
         try {
             wait.waitForElementVisible(signInErrorText, 1);
-        } catch (Exception e) {
-            return null;
+            return driver.findElement(signInErrorText).getText();
+        } catch (NoSuchElementException e) {
+            return "";
         }
-        return driver.findElement(signInErrorText).getText();
     }
 }

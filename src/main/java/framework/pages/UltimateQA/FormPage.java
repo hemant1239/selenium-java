@@ -5,11 +5,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 public class FormPage {
-    //Test Data
-    public static final String NAME = "Test Name";
-    public static final String MESSAGE = "Test Message";
-    public static final String FORM_SUBMIT_SUCCESS = "Thanks for contacting us";
-    public static final String CAPTCHA = "Captcha";
     private final WebDriver driver;
     private final WaitUtils wait;
     // Locators

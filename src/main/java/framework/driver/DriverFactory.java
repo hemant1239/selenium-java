@@ -5,19 +5,29 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class DriverFactory {
+    private static final ThreadLocal<WebDriver> tl = new ThreadLocal<>();
 
-    private static WebDriver driver = null;
-
-    private DriverFactory() {
+    public static WebDriver getDriver(String browser) {
+        if (tl.get() == null) {
+            tl.set(create(browser));
+        }
+        return tl.get();
     }
 
-    public static WebDriver getDriver(String driverName) {
-        if (driver == null) {
-            if (driverName.equalsIgnoreCase("chrome"))
-                driver = new ChromeDriver();
-            else if (driverName.equalsIgnoreCase("firefox"))
-                driver = new FirefoxDriver();
+    private static WebDriver create(String browser) {
+        switch (browser.toLowerCase()) {
+            case "firefox":
+                return new FirefoxDriver();
+            case "chrome":
+            default:
+                return new ChromeDriver();
         }
-        return driver;
+    }
+
+    public static void quit() {
+        if (tl.get() != null) {
+            tl.get().quit();
+            tl.remove();
+        }
     }
 }

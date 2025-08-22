@@ -7,7 +7,7 @@
         </Console>
 
         <!-- File log -->
-        <File name="FileLogger" fileName="logs/test.log" append="false">
+        <File name="FileLogger" fileName="./target/logs/test.log" append="false">
             <PatternLayout>
                 <pattern>[%d{yyyy-MM-dd HH:mm:ss}] [%t] %-5level %logger{36} - %msg%n</pattern>
             </PatternLayout>

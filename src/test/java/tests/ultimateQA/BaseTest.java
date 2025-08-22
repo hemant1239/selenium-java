@@ -6,6 +6,8 @@ import framework.driver.DriverFactory;
 import framework.utils.ConfigReader;
 import framework.utils.ReportManager;
 import framework.utils.ScreenshotUtil;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
@@ -17,6 +19,7 @@ public class BaseTest {
     protected WebDriver driver;
     protected ExtentTest test;
     protected ScreenshotUtil scUtil;
+    protected Logger logger;
 
     @BeforeSuite
     public void setUpReport() {
@@ -26,12 +29,14 @@ public class BaseTest {
     @Parameters("browser")
     @BeforeMethod
     public void setUp(@Optional("chrome") String browser, Method method) {
-        String url = ConfigReader.get("url");
+        //Logs and screenshot setup
+        test = extent.createTest(method.getName());
+        logger = LogManager.getLogger(this.getClass());
+        //Driver setup
         driver = DriverFactory.getDriver(browser);
         driver.manage().window().maximize();
-        test = extent.createTest(method.getName());
+        driver.get(ConfigReader.get("ultimateQAUrl"));
         scUtil = new ScreenshotUtil(driver);
-        driver.get(url);
     }
 
     @AfterMethod
@@ -45,11 +50,11 @@ public class BaseTest {
         } else if (result.getStatus() == ITestResult.SKIP) {
             test.skip("Test Skipped: " + testName);
         }
+        DriverFactory.quit();
     }
 
     @AfterSuite
     public void tearDownAndFlushReport() {
-        if (driver != null) driver.quit();
         extent.flush();
     }
 }

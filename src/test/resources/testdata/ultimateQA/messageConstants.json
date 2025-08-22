@@ -1,0 +1,9 @@
+{
+  "signInMessages": {
+    "invalidCredentialsMessage": "Invalid email or password."
+  },
+  "formMessages": {
+    "formSuccess": "Thanks for contacting us",
+    "captcha": "Captcha"
+  }
+}
