@@ -28,6 +28,7 @@ public class UltimateQASignInTest extends BaseTest {
         reportLogger.info("Entered password");
         signInPage.clickSignIn();
         reportLogger.info("Clicked on sign in button");
+        scUtil.getScreenShot();
         Assert.assertEquals(signInPage.getSignInErrorMessage(), messageConstants.get("invalidCredentialsMessage").asText(), "Sign in invalid validation failed");
     }
 }
