@@ -1,6 +1,5 @@
 package tests.ultimateQA;
 
-import com.aventstack.extentreports.MediaEntityBuilder;
 import com.fasterxml.jackson.databind.JsonNode;
 import framework.pages.UltimateQA.SignInPage;
 import framework.utils.ConfigReader;
@@ -16,7 +15,7 @@ public class UltimateQASignInTest extends BaseTest {
 
     @BeforeClass
     public void dataSetup() {
-        messageConstants = JsonUtils.getJsonNode("src/test/resources/testdata/ultimateQA/messageConstants.json");
+        messageConstants = JsonUtils.getJsonNode("src/test/resources/testdata/ultimateQA/messageConstants.json").get("signInMessages");
     }
 
     @Test
@@ -24,13 +23,11 @@ public class UltimateQASignInTest extends BaseTest {
         signInPage = new SignInPage(driver);
         signInPage.clickLoginLink();
         signInPage.enterEmail(ConfigReader.get("invalidUserName"));
-        logger.info("Entered user name");
+        reportLogger.info("Entered user name");
         signInPage.enterPassword(ConfigReader.get("invalidPassword"));
-        logger.info("Entered password");
-        test.info("Entered credentials");
+        reportLogger.info("Entered password");
         signInPage.clickSignIn();
-        logger.info("Clicked on sign in button");
-        Assert.assertEquals(signInPage.getSignInErrorMessage(), messageConstants.get("signInMessages").get("invalidCredentialsMessage").asText(), "Sign in invalid validation failed");
-        test.pass(MediaEntityBuilder.createScreenCaptureFromBase64String(scUtil.getExtentScreenShot()).build());
+        reportLogger.info("Clicked on sign in button");
+        Assert.assertEquals(signInPage.getSignInErrorMessage(), messageConstants.get("invalidCredentialsMessage").asText(), "Sign in invalid validation failed");
     }
 }

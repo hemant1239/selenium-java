@@ -4,10 +4,9 @@ import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import framework.driver.DriverFactory;
 import framework.utils.ConfigReader;
+import framework.utils.ReportLogger;
 import framework.utils.ReportManager;
 import framework.utils.ScreenshotUtil;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
@@ -19,7 +18,7 @@ public class BaseTest {
     protected WebDriver driver;
     protected ExtentTest test;
     protected ScreenshotUtil scUtil;
-    protected Logger logger;
+    protected ReportLogger reportLogger;
 
     @BeforeSuite
     public void setUpReport() {
@@ -30,8 +29,10 @@ public class BaseTest {
     @BeforeMethod
     public void setUp(@Optional("chrome") String browser, Method method) {
         //Logs and screenshot setup
-        test = extent.createTest(method.getName());
-        logger = LogManager.getLogger(this.getClass());
+        String testName = method.getName() + " [" + browser.toUpperCase() + "] ";
+        test = extent.createTest(testName);
+        reportLogger = new ReportLogger(this.getClass(), test);
+        reportLogger.info("STARTED TEST: " + method.getName());
         //Driver setup
         driver = DriverFactory.getDriver(browser);
         driver.manage().window().maximize();
@@ -43,12 +44,11 @@ public class BaseTest {
     public void tearDown(ITestResult result) {
         String testName = result.getMethod().getMethodName();
         if (result.getStatus() == ITestResult.FAILURE) {
-            test.fail("Test Failed: " + testName)
-                    .fail(result.getThrowable());
+            reportLogger.fail("TEST FAILED:" + testName + " " + result.getThrowable(), scUtil.getExtentScreenShot());
         } else if (result.getStatus() == ITestResult.SUCCESS) {
-            test.pass("Test Passed: " + testName);
+            reportLogger.pass("TEST PASSED: " + testName, scUtil.getExtentScreenShot());
         } else if (result.getStatus() == ITestResult.SKIP) {
-            test.skip("Test Skipped: " + testName);
+            reportLogger.skip("TEST SKIPPED: " + testName);
         }
         DriverFactory.quit();
     }
