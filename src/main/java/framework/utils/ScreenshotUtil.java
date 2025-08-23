@@ -13,7 +13,7 @@ import java.util.Date;
 public class ScreenshotUtil {
     public static String scDirPath = FrameworkConstants.SCREENSHOT_PATH + "/";
     private final WebDriver driver;
-    public String commonPath = scDirPath + "screenshot_" + new SimpleDateFormat("dd-MM-yyyy HH-mm-ss").format(new Date()) + ".png";
+    public String commonPath = scDirPath + "screenshot_" + new SimpleDateFormat("yyyyMMdd_HHmmssSSS").format(new Date()) + ".png";
 
     public ScreenshotUtil(WebDriver driver) {
         this.driver = driver;
