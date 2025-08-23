@@ -11,8 +11,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class ScreenshotUtil {
+    public static String scDirPath = FrameworkConstants.SCREENSHOT_PATH + "/";
     private final WebDriver driver;
-    public static String scDirPath = FrameworkConstants.SCREENSHOT_PATH+"/";
     public String commonPath = scDirPath + "screenshot_" + new SimpleDateFormat("dd-MM-yyyy HH-mm-ss").format(new Date()) + ".png";
 
     public ScreenshotUtil(WebDriver driver) {
@@ -21,15 +21,20 @@ public class ScreenshotUtil {
 
     //To be used when screenshot is needed at some particular step and not in report
     public void getScreenShot() throws Exception {
-        File src = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+        File src = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
         FileUtils.copyFile(src, new File(commonPath));
     }
 
     //Extent report screenshot
-    public String getExtentScreenShot() throws Exception{
-        TakesScreenshot takeSc = (TakesScreenshot)driver;
-        String sc = takeSc.getScreenshotAs(OutputType.BASE64);
-        return "data:image/jpg;base64, "+sc;
+    public String getExtentScreenShot() {
+        try {
+            TakesScreenshot takeSc = (TakesScreenshot) driver;
+            String sc = takeSc.getScreenshotAs(OutputType.BASE64);
+            return "data:image/jpg;base64, " + sc;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return "";
     }
 }
 
