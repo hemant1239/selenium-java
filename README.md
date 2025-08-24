@@ -13,7 +13,7 @@ Designed for scalability, maintainability, and easy demonstration of framework c
 - ✅ Supports multiple browsers (Chrome, Firefox)  
 - ✅ Headless execution support (Chrome)  
 - ✅ Screenshot capture on pass and failure  
-- ✅ Reusable utility methods (e.g., waits, JS executor)
+- ✅ Reusable utility methods (e.g., waits)
 - ✅ Extent report with screenshots
 
 ---
@@ -85,3 +85,4 @@ mvn clean test -Dheadless=true
 🔗 GitHub - https://github.com/hemant1239
 
 🔗 LinkedIn - https://www.linkedin.com/in/hemant-d-687054102/
+
