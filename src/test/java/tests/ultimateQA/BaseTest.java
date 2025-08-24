@@ -20,20 +20,13 @@ public class BaseTest {
     protected ScreenshotUtil scUtil;
     protected ReportLogger reportLogger;
 
-    @BeforeSuite
-    public void setUpReport() {
-        extent = ReportManager.getInstance();
-    }
-
     @Parameters("browser")
     @BeforeMethod
     public void setUp(@Optional("chrome") String browser, Method method) {
-        //Logs and screenshot setup
         String testName = method.getName() + " [" + browser.toUpperCase() + "] ";
-        test = extent.createTest(testName);
-        reportLogger = new ReportLogger(this.getClass(), test);
+        ReportManager.createTest(testName);
+        reportLogger = new ReportLogger(this.getClass(), ReportManager.getTest());
         reportLogger.info("STARTED TEST: " + method.getName());
-        //Driver setup
         driver = DriverFactory.getDriver(browser);
         driver.manage().window().maximize();
         driver.get(ConfigReader.get("ultimateQAUrl"));
@@ -54,7 +47,7 @@ public class BaseTest {
     }
 
     @AfterSuite
-    public void tearDownAndFlushReport() {
-        extent.flush();
+    public void flushReport() {
+        ReportManager.flushReports();
     }
 }

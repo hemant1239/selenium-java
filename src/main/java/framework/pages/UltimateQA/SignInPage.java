@@ -2,14 +2,17 @@ package framework.pages.UltimateQA;
 
 import framework.utils.WaitUtils;
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+
+import java.util.Optional;
 
 public class SignInPage {
     private final WebDriver driver;
     private final WaitUtils wait;
     //Locators
-    private final By loginAutomationLink = By.cssSelector("a[href='http://courses.ultimateqa.com/users/sign_in']");
+    private final By loginAutomationLink = By.linkText("Login automation");
     private final By emailInput = By.cssSelector("input[id='user[email]']");
     private final By passwordInput = By.cssSelector("input[id='user[password]']");
     private final By signInButton = By.xpath("//button[contains(text(),'Sign in')]");
@@ -33,15 +36,15 @@ public class SignInPage {
     }
 
     public void clickSignIn() {
-        driver.findElement(signInButton).click();
+        WebElement signIn = driver.findElement(signInButton);
+        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", signIn);
     }
 
-    public String getSignInErrorMessage() {
+    public Optional<String> getSignInErrorMessage() {
         try {
-            wait.waitForElementVisible(signInErrorText, 1);
-            return driver.findElement(signInErrorText).getText();
-        } catch (NoSuchElementException e) {
-            return "";
+            return Optional.of(wait.waitForElementVisible(signInErrorText, 1).getText());
+        } catch (Exception e) {
+            return Optional.empty();
         }
     }
 }
