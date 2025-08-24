@@ -15,7 +15,7 @@ public class UltimateQASignInTest extends BaseTest {
 
     @BeforeClass
     public void dataSetup() {
-        messageConstants = JsonUtils.getJsonNodeFromResource("testdata/ultimateQA/messageConstants.json").get("signInMessages");
+        messageConstants = JsonUtils.getJsonNodeFromResource("testData/ultimateQA/messageConstants.json").get("signInMessages");
     }
 
     @Test

@@ -14,8 +14,8 @@ public class UltimateQAFormTest extends BaseTest {
 
     @BeforeClass
     public void dataSetup() {
-        formTestData = JsonUtils.getJsonNodeFromResource("testdata/ultimateQA/formTestData.json").get("formFieldsTest");
-        messageConstants = JsonUtils.getJsonNodeFromResource("testdata/ultimateQA/messageConstants.json").get("formMessages");
+        formTestData = JsonUtils.getJsonNodeFromResource("testData/ultimateQA/formTestData.json").get("formFieldsTest");
+        messageConstants = JsonUtils.getJsonNodeFromResource("testData/ultimateQA/messageConstants.json").get("formMessages");
     }
 
     @Test(priority = 1)
