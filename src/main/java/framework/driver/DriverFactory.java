@@ -2,6 +2,7 @@ package framework.driver;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class DriverFactory {
@@ -20,7 +21,12 @@ public class DriverFactory {
                 return new FirefoxDriver();
             case "chrome":
             default:
-                return new ChromeDriver();
+                ChromeOptions cOpts = new ChromeOptions();
+                if (Boolean.getBoolean("headless")) {
+                    cOpts.addArguments("--headless=new");
+                    cOpts.addArguments("--window-size=1920,1080");
+                }
+                return new ChromeDriver(cOpts);
         }
     }
 

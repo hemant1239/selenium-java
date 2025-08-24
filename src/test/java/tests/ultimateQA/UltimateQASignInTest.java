@@ -15,7 +15,7 @@ public class UltimateQASignInTest extends BaseTest {
 
     @BeforeClass
     public void dataSetup() {
-        messageConstants = JsonUtils.getJsonNode("src/test/resources/testdata/ultimateQA/messageConstants.json").get("signInMessages");
+        messageConstants = JsonUtils.getJsonNodeFromResource("testdata/ultimateQA/messageConstants.json").get("signInMessages");
     }
 
     @Test
@@ -28,6 +28,6 @@ public class UltimateQASignInTest extends BaseTest {
         reportLogger.info("Entered password");
         signInPage.clickSignIn();
         reportLogger.info("Clicked on sign in button");
-        Assert.assertEquals(signInPage.getSignInErrorMessage(), messageConstants.get("invalidCredentialsMessage").asText(), "Sign in invalid validation failed");
+        Assert.assertEquals(signInPage.getSignInErrorMessage().orElse(""), messageConstants.get("invalidCredentialsMessage").asText(), "Sign in invalid validation failed");
     }
 }

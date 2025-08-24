@@ -25,16 +25,12 @@ public class ScreenshotUtil {
         FileUtils.copyFile(src, new File(commonPath));
     }
 
-    //Extent report screenshot
     public String getExtentScreenShot() {
         try {
-            TakesScreenshot takeSc = (TakesScreenshot) driver;
-            String sc = takeSc.getScreenshotAs(OutputType.BASE64);
-            return "data:image/jpg;base64, " + sc;
+            return ((TakesScreenshot) driver).getScreenshotAs(OutputType.BASE64);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            return "";
         }
-        return "";
     }
 }
 

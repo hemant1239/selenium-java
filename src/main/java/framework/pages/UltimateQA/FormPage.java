@@ -8,7 +8,7 @@ public class FormPage {
     private final WebDriver driver;
     private final WaitUtils wait;
     // Locators
-    private final By fillFormLink = By.cssSelector("a[href='https://ultimateqa.com/filling-out-forms/']");
+    private final By fillFormLink = By.linkText("Fill out forms");
     private final By nameInput = By.cssSelector("#et_pb_contact_name_0");
     private final By nameCaptchaInput = By.cssSelector("#et_pb_contact_name_1");
     private final By messageInput = By.cssSelector("#et_pb_contact_message_0");
