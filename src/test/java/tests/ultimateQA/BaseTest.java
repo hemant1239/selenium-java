@@ -49,5 +49,7 @@ public class BaseTest {
     @AfterSuite
     public void flushReport() {
         ReportManager.flushReports();
+        extent = null;
+        ReportManager.removeTest();
     }
 }

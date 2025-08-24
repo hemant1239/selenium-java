@@ -39,5 +39,9 @@ public class ReportManager {
             extent.flush();
         }
     }
+
+    public static void removeTest(){
+        extentTest.remove();
+    }
 }
 
